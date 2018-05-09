@@ -5,7 +5,7 @@ ONLY_FOR_ARCHS =	amd64 i386 powerpc sparc64
 COMMENT =		ANSI Common Lisp implementation
 
 DISTNAME=		clisp-2.49
-REVISION =		2
+REVISION =		3
 CATEGORIES=		lang
 HOMEPAGE=		http://clisp.cons.org/
 
@@ -16,7 +16,7 @@ WANTLIB =  avcall c callback iconv intl m ncurses readline sigsegv
 
 LIB_DEPENDS =		devel/gettext \
 			devel/libsigsegv \
-			devel/ffcall>=1.10p1
+			devel/libffcall>=2.1
 
 MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=clisp/}
 EXTRACT_SUFX=		.tar.bz2
