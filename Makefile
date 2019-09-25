@@ -39,6 +39,8 @@ CONFIGURE_ENV =		ac_cv_prog_DVIPDF='' \
 			ac_cv_prog_GROFF='' \
 			ac_cv_prog_PS2PDF=''
 
+USE_WXNEEDED =		Yes
+
 #.if ${MACHINE_ARCH} == "sparc64"
 #CFLAGS +=		-DSAFETY=2 -DNO_ASM -mcmodel=medany
 #.endif
