@@ -4,8 +4,7 @@ ONLY_FOR_ARCHS =	amd64 i386 powerpc sparc64
 
 COMMENT =		ANSI Common Lisp implementation
 
-DISTNAME=		clisp-2.49
-REVISION =		5
+DISTNAME=		clisp-2.49.92
 CATEGORIES=		lang
 HOMEPAGE=		http://clisp.cons.org/
 
@@ -18,7 +17,8 @@ LIB_DEPENDS =		devel/gettext,-runtime \
 			devel/libsigsegv \
 			devel/libffcall>=2.2
 
-MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=clisp/}
+#MASTER_SITES=		${MASTER_SITE_SOURCEFORGE:=clisp/}
+MASTER_SITES=		https://haible.de/bruno/gnu/
 EXTRACT_SUFX=		.tar.bz2
 
 USE_GMAKE=		Yes
@@ -27,7 +27,6 @@ SEPARATE_BUILD=		Yes
 
 CONFIGURE_STYLE=	gnu old
 CONFIGURE_ARGS=		--fsstnd=openbsd \
-			--disable-mmap \
 			--with-gettext \
 			--mandir=${PREFIX}/man \
 			--docdir=${PREFIX}/share/doc/clisp \
@@ -40,17 +39,17 @@ CONFIGURE_ENV =		ac_cv_prog_DVIPDF='' \
 			ac_cv_prog_GROFF='' \
 			ac_cv_prog_PS2PDF=''
 
-.if ${MACHINE_ARCH} == "sparc64"
-CFLAGS +=		-DSAFETY=2 -DNO_ASM -mcmodel=medany
-.endif
+#.if ${MACHINE_ARCH} == "sparc64"
+#CFLAGS +=		-DSAFETY=2 -DNO_ASM -mcmodel=medany
+#.endif
 
-.if ${MACHINE_ARCH} == "powerpc"
-CONFIGURE_ARGS +=	--with-gmalloc
-CFLAGS +=		-fno-pie -nopie
-LDFLAGS +=		-nopie
-.else
+#.if ${MACHINE_ARCH} == "powerpc"
+#CONFIGURE_ARGS +=	--with-gmalloc
+#CFLAGS +=		-fno-pie -nopie
+#LDFLAGS +=		-nopie
+#.else
 CONFIGURE_ARGS +=	--without-gmalloc
-.endif
+#.endif
 
 pre-build:
 	ln -sf ${LOCALBASE}/bin/gmake ${WRKDIR}/bin/make
