@@ -11,9 +11,10 @@ HOMEPAGE=		http://clisp.cons.org/
 # GPLv2
 PERMIT_PACKAGE=	Yes
 
-WANTLIB =  avcall c callback iconv intl m curses readline sigsegv
+WANTLIB =  c ffcall iconv intl m curses readline sigsegv unistring
 
-LIB_DEPENDS =		devel/gettext,-runtime \
+LIB_DEPENDS =		converters/libunistring \
+			devel/gettext,-runtime \
 			devel/libsigsegv \
 			devel/libffcall>=2.2
 
