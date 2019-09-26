@@ -27,3 +27,14 @@ Index: src/makemake.in
          ;;
  
        # OpenBSD/x86_64
+       openbsd*--x86_64)
+         XCFLAGS="$XCFLAGS -DNO_ASM"
+@@ -2289,7 +2299,7 @@ echol "htmldir = ${HTMLDIR}"
+ echol "psdir   = ${PSDIR}"
+ echol "pdfdir  = ${PDFDIR}"
+ echol "libdir  = ${LIBDIR}"
+-echol "lisplibdir = \$(libdir)${NEXT_}\$(TOPDIR)"
++echol "lisplibdir = \$(libdir)${NEXT_}clisp"
+ test -n "$USE_GETTEXT" && echol "localedir = ${LOCALEDIR}"
+ echol "elispdir = ${ELISPDIR}"
+ echol "vimdir = ${VIMDIR}"
