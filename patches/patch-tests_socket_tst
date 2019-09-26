@@ -7,20 +7,27 @@ socket.
 Index: tests/socket.tst
 --- tests/socket.tst.orig
 +++ tests/socket.tst
-@@ -520,13 +520,17 @@ T
-   #-win32 (:ECONNREFUSED #+macos 61 #-macos 111)
+@@ -517,16 +517,22 @@ T
+ ;; http://article.gmane.org/gmane.lisp.clisp.general/12286
+ ;; https://sourceforge.net/p/clisp/mailman/message/19641749/
+ (check-os-error (socket:socket-connect 12345 "localhost" :timeout 30)
+-  #-win32 (:ECONNREFUSED #+macos 61 #-macos 111)
++  #-(or macos openbsd win32) (:ECONNREFUSED 111)
++  #+(or macos openbsd) (:ECONNREFUSED 61)
    #+win32 (:ETIMEDOUT 10060))
  T
 -(open-stream-p (setq *socket-1* (socket:socket-connect
 -                                 12345 "localhost" :timeout 0))) T
 -(check-os-error (read-line *socket-1*)
+-  #-win32 (:ECONNREFUSED #+macos 61 #-macos 111)
 +(check-os-error
 + (and (setq *socket-1* nil
 +            *socket-1* (socket:socket-connect
 +                        12345 "localhost" :timeout 0))
 +      (open-stream-p *socket-1*)
 +      (read-line *socket-1*))
-   #-win32 (:ECONNREFUSED #+macos 61 #-macos 111)
++  #-(or macos openbsd win32) (:ECONNREFUSED 111)
++  #+(or macos openbsd) (:ECONNREFUSED 61)
    #+win32 (:EINPROGRESS 10036))
  T
 -(close *socket-1*) T
@@ -29,3 +36,31 @@ Index: tests/socket.tst
  
  ;; https://sourceforge.net/p/clisp/bugs/587/: non-0 timeout
  (multiple-value-bind (run args) (cmd-args)
+@@ -565,13 +571,13 @@ T
+             (socket:socket-status so)
+             (write-line "foo" so)
+             (socket:socket-status so)
+-            #+macos (handler-case (read-char so)
++            #+(or macos openbsd) (handler-case (read-char so)
+                       (end-of-file (c)
+                         (princ 'read-char) (princ-error c) t))
+-            #-macos (check-os-error (read-char so) (:ECONNRESET 104))
++            #-(or macos openbsd) (check-os-error (read-char so) (:ECONNRESET 104))
+             (null (member (socket:socket-status so) '(:EOF :APPEND)))
+-            #+macos (string= (write-line "bar" so) "bar")
+-            #-macos (check-os-error (write-line "bar" so) (:EPIPE 32))
++            #+(or macos openbsd) (string= (write-line "bar" so) "bar")
++            #-(or macos openbsd) (check-os-error (write-line "bar" so) (:EPIPE 32))
+             (null (member (socket:socket-status so) '(:EOF :APPEND)))
+             (handler-case (read-char so)
+               (end-of-file (c)
+@@ -581,7 +587,8 @@ T
+ 
+ ;; https://sourceforge.net/p/clisp/feature-requests/46/
+ (check-os-error (socket:socket-connect 0)
+-  #-(or win32 macos) (:ECONNREFUSED 111)
++  #-(or win32 macos openbsd) (:ECONNREFUSED 111)
++  #+openbsd (:ECONNREFUSED 61)
+   #+macos (:EADDRNOTAVAIL 49)
+   #+win32 (:EADDRNOTAVAIL 10049))
+ T
