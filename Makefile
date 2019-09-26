@@ -1,6 +1,6 @@
 # $OpenBSD: Makefile,v 1.52 2019/07/12 20:47:16 sthen Exp $
 
-ONLY_FOR_ARCHS =	amd64 i386 powerpc sparc64
+ONLY_FOR_ARCHS =	aarch64 amd64 i386 powerpc sparc64
 
 COMMENT =		ANSI Common Lisp implementation
 
