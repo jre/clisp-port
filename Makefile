@@ -27,6 +27,7 @@ SEPARATE_BUILD=		Yes
 
 CONFIGURE_STYLE=	gnu old
 CONFIGURE_ARGS=		--fsstnd=openbsd \
+			--disable-mmap \
 			--with-gettext \
 			--mandir=${PREFIX}/man \
 			--docdir=${PREFIX}/share/doc/clisp \

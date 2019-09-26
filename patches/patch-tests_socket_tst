@@ -1,0 +1,31 @@
+$OpenBSD: patch-tests_socket_tst,v 1.1 2010/08/23 16:31:33 jasper Exp $
+
+This test assumes that a nonblocking connect to a closed port will
+never fail, the failure will always occur when trying to read from the
+socket.
+
+Index: tests/socket.tst
+--- tests/socket.tst.orig
++++ tests/socket.tst
+@@ -520,13 +520,17 @@ T
+   #-win32 (:ECONNREFUSED #+macos 61 #-macos 111)
+   #+win32 (:ETIMEDOUT 10060))
+ T
+-(open-stream-p (setq *socket-1* (socket:socket-connect
+-                                 12345 "localhost" :timeout 0))) T
+-(check-os-error (read-line *socket-1*)
++(check-os-error
++ (and (setq *socket-1* nil
++            *socket-1* (socket:socket-connect
++                        12345 "localhost" :timeout 0))
++      (open-stream-p *socket-1*)
++      (read-line *socket-1*))
+   #-win32 (:ECONNREFUSED #+macos 61 #-macos 111)
+   #+win32 (:EINPROGRESS 10036))
+ T
+-(close *socket-1*) T
++(or (null *socket-1*)
++    (close *socket-1*)) T
+ 
+ ;; https://sourceforge.net/p/clisp/bugs/587/: non-0 timeout
+ (multiple-value-bind (run args) (cmd-args)
