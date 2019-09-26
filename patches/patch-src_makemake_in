@@ -15,17 +15,15 @@ Index: src/makemake.in
        # OpenBSD/i386
        openbsd*--i386)
          XCFLAGS="$XCFLAGS -DNO_ASM"
-@@ -1855,6 +1860,11 @@ else
-         XCFLAGS="$XCFLAGS -DNO_ADDRESS_SPACE_ASSUMPTIONS"
-         XCFLAGS="$XCFLAGS -DNO_GENERATIONAL_GC"
+@@ -1857,6 +1862,11 @@ else
          XCFLAGS="$XCFLAGS -DNO_SYMBOLFLAGS"
-+        ;;
-+
+         ;;
+ 
 +      # OpenBSD/arm64
 +      openbsd*--arm64)
 +        XCFLAGS="$XCFLAGS -DNO_ASM"
-         ;;
- 
++        ;;
++
        # OpenBSD/x86_64
        openbsd*--x86_64)
          XCFLAGS="$XCFLAGS -DNO_ASM"
