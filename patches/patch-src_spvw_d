@@ -1,0 +1,15 @@
+$OpenBSD$
+
+Index: src/spvw.d
+--- src/spvw.d.orig
++++ src/spvw.d
+@@ -1983,6 +1983,9 @@ local void init_object_tab (void) {
+      #ifdef UNIX_MACOSX
+       " :MACOS"
+      #endif
++     #ifdef UNIX_OPENBSD
++      " :OPENBSD"
++     #endif
+      #ifdef UNIX_CYGWIN
+       " :CYGWIN"
+      #endif
