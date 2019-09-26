@@ -1,0 +1,17 @@
+$OpenBSD$
+
+Index: src/makemake.in
+--- src/makemake.in.orig
++++ src/makemake.in
+@@ -1686,6 +1686,11 @@ else
+         XCFLAGS="$XCFLAGS -DNO_ASM"
+         ;;
+ 
++      # OpenBSD/arm
++      openbsd*--arm)
++        XCFLAGS="$XCFLAGS -mno-unaligned-access -DNO_ASM -DNO_ARI_ASM"
++        ;;
++
+       # OpenBSD/i386
+       openbsd*--i386)
+         XCFLAGS="$XCFLAGS -DNO_ASM"
