@@ -11,7 +11,7 @@ HOMEPAGE=		http://clisp.cons.org/
 # GPLv2
 PERMIT_PACKAGE=	Yes
 
-WANTLIB =  c ffcall iconv intl m curses readline sigsegv unistring
+WANTLIB =  c curses ffcall iconv intl m readline sigsegv unistring
 
 LIB_DEPENDS =		converters/libunistring \
 			devel/gettext,-runtime \
