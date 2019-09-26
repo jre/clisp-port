@@ -54,13 +54,14 @@ Index: tests/socket.tst
              (null (member (socket:socket-status so) '(:EOF :APPEND)))
              (handler-case (read-char so)
                (end-of-file (c)
-@@ -581,7 +587,8 @@ T
+@@ -581,8 +587,8 @@ T
  
  ;; https://sourceforge.net/p/clisp/feature-requests/46/
  (check-os-error (socket:socket-connect 0)
 -  #-(or win32 macos) (:ECONNREFUSED 111)
+-  #+macos (:EADDRNOTAVAIL 49)
 +  #-(or win32 macos openbsd) (:ECONNREFUSED 111)
-+  #+openbsd (:ECONNREFUSED 61)
-   #+macos (:EADDRNOTAVAIL 49)
++  #+(or macos openbsd) (:EADDRNOTAVAIL 49)
    #+win32 (:EADDRNOTAVAIL 10049))
  T
+ (check-os-error (socket-server 1240 :interface "[/]=") (:EINVAL 22)) T
