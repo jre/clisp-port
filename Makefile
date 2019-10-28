@@ -30,6 +30,7 @@ CONFIGURE_STYLE=	gnu old
 CONFIGURE_ARGS=		--fsstnd=openbsd \
 			--disable-mmap \
 			--with-gettext \
+			--without-gmalloc \
 			--mandir=${PREFIX}/man \
 			--docdir=${PREFIX}/share/doc/clisp \
 			--elispdir=${PREFIX}/share/emacs/site-lisp \
@@ -42,18 +43,6 @@ CONFIGURE_ENV =		ac_cv_prog_DVIPDF='' \
 			ac_cv_prog_PS2PDF=''
 
 USE_WXNEEDED =		Yes
-
-#.if ${MACHINE_ARCH} == "sparc64"
-#CFLAGS +=		-DSAFETY=2 -DNO_ASM -mcmodel=medany
-#.endif
-
-#.if ${MACHINE_ARCH} == "powerpc"
-#CONFIGURE_ARGS +=	--with-gmalloc
-#CFLAGS +=		-fno-pie -nopie
-#LDFLAGS +=		-nopie
-#.else
-CONFIGURE_ARGS +=	--without-gmalloc
-#.endif
 
 pre-build:
 	ln -sf ${LOCALBASE}/bin/gmake ${WRKDIR}/bin/make
