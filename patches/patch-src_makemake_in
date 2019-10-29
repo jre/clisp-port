@@ -15,13 +15,18 @@ Index: src/makemake.in
        # OpenBSD/i386
        openbsd*--i386)
          XCFLAGS="$XCFLAGS -DNO_ASM"
-@@ -1857,6 +1862,16 @@ else
+@@ -1857,6 +1862,21 @@ else
          XCFLAGS="$XCFLAGS -DNO_SYMBOLFLAGS"
          ;;
  
 +      # OpenBSD/arm64
 +      openbsd*--arm64)
 +        XCFLAGS="$XCFLAGS -DNO_ASM"
++        ;;
++
++      # OpenBSD/mips64
++      openbsd*--mips64)
++        XCFLAGS="$XCFLAGS -DNO_ASM -DNO_ARI_ASM"
 +        ;;
 +
 +      # OpenBSD/sparc64
@@ -32,7 +37,7 @@ Index: src/makemake.in
        # OpenBSD/x86_64
        openbsd*--x86_64)
          XCFLAGS="$XCFLAGS -DNO_ASM"
-@@ -2289,7 +2304,7 @@ echol "htmldir = ${HTMLDIR}"
+@@ -2289,7 +2309,7 @@ echol "htmldir = ${HTMLDIR}"
  echol "psdir   = ${PSDIR}"
  echol "pdfdir  = ${PDFDIR}"
  echol "libdir  = ${LIBDIR}"
